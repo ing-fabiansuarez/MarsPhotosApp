@@ -11,6 +11,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import dev.archfoundry.marsphotosapp.MarsPhotosApplication
 import dev.archfoundry.marsphotosapp.data.MarsPhotosRepository
+import dev.archfoundry.marsphotosapp.network.MarsPhoto
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -27,7 +28,8 @@ class MarsViewModel(private val marsPhotosRepository: MarsPhotosRepository) : Vi
         viewModelScope.launch {
             try {
                 val response = marsPhotosRepository.getMarsPhotos()
-                marsUiState = MarsUiState.Success("${response.size} fotos desdes la api.")
+                val urlFirstImage = response[0]
+                marsUiState = MarsUiState.Success(urlFirstImage)
             } catch (e: IOException) {
                 marsUiState = MarsUiState.Error
             }
@@ -47,7 +49,7 @@ class MarsViewModel(private val marsPhotosRepository: MarsPhotosRepository) : Vi
 
 
 sealed interface MarsUiState {
-    data class Success(val photos: String) : MarsUiState
+    data class Success(val photos: MarsPhoto) : MarsUiState
     object Error : MarsUiState
     object Loading : MarsUiState
 }
