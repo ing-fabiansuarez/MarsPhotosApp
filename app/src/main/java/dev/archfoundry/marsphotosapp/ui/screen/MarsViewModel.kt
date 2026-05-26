@@ -4,6 +4,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dev.archfoundry.marsphotosapp.network.MarsApi
+import kotlinx.coroutines.launch
 
 
 class MarsViewModel : ViewModel()  {
@@ -14,6 +17,9 @@ class MarsViewModel : ViewModel()  {
         getMarsPhotos()
     }
     fun getMarsPhotos(){
-
+        viewModelScope.launch {
+            val listResult: String = MarsApi.retrofitService.getPhotos()
+            marsUiState = listResult
+        }
     }
 }
