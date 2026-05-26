@@ -61,4 +61,12 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$versionViewModel")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$versionViewModel")
 
+    // Retrofit
+    val versionRetrofit = "2.11.0"
+    implementation("com.squareup.retrofit2:retrofit:$versionRetrofit")
+    // Retrofit with Scalar Converter
+    implementation("com.squareup.retrofit2:converter-scalars:$versionRetrofit")
+
+
+
 }
