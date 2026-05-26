@@ -28,8 +28,7 @@ class MarsViewModel(private val marsPhotosRepository: MarsPhotosRepository) : Vi
         viewModelScope.launch {
             try {
                 val response = marsPhotosRepository.getMarsPhotos()
-                val urlFirstImage = response[0]
-                marsUiState = MarsUiState.Success(urlFirstImage)
+                marsUiState = MarsUiState.Success(response)
             } catch (e: IOException) {
                 marsUiState = MarsUiState.Error
             }
@@ -49,7 +48,7 @@ class MarsViewModel(private val marsPhotosRepository: MarsPhotosRepository) : Vi
 
 
 sealed interface MarsUiState {
-    data class Success(val photos: MarsPhoto) : MarsUiState
+    data class Success(val photos: List<MarsPhoto>) : MarsUiState
     object Error : MarsUiState
     object Loading : MarsUiState
 }
